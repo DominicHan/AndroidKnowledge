@@ -185,13 +185,17 @@ greenDAO是一个可以帮助Android开发者快速将Java对象映射到SQLite�
 
 ##19.进程间通讯方法
 跨进程访问activity，需要action(android.intent.action.CALL)和uri，例如拨打电话的activity
+
 Content Provider
+
 Broadcast
+
 AIDL 
 
 
 ##20.sleep wait的区别
 sleep（100L）意思为：占用CPU，线程休眠100毫秒
+
 wait（100L）意思为：不占用CPU，线程等待100毫秒 
 
 ##21.线程安全
@@ -202,7 +206,32 @@ LruCache中Lru算法的实现就是通过LinkedHashMap来实现的。LinkedHashM
 
 ##23.MeasureSpec.specMode
 EXACTLY：一般是设置了明确的值或者是MATCH_PARENT
+
 AT_MOST：表示子布局限制在一个最大值内，一般为WARP_CONTENT
+
 UNSPECIFIED：表示子布局想要多大就多大，很少使用
 
+1)不论父View 的specMode是EXACTLY、UNSPECIFIED、AT_MOST的哪一种，如果子view在xml文件里面把layout_width或者layout_height这是了具体
+  的dimen值、或者在代码里调用相应的方法为view的宽度或者高度设置了具体的值，那么此时widthSpec的mode 或者heightSpec的mode就是EXACLTY,size就等于layout_width或者
+  layout_height的值。此时子view的specMode值不受父View的specMode的影响。
 
+2)当父View的specMode为EXACTLY的时候：父View强加给子View一个确切的大小,有如下两种情况
+    2.1)子View的layout_width或者layout_height设置为MATCH_PARENT的时候，子View的specMode为EXACTLY
+    2.2)子View的layout_width或者layout_height设置为WRAP_CONTENT的时候，子View的specMode为AT_MOST
+    2.3)不论子view为match_parent或者wrap_content，resultSize都等于父类的size.
+
+3)当父view的specMode为AT_MOST的时候：父View强加给一个最大的size给子view，最大的size也就是父view的size
+    3.1)此时不论子view的为match_parent或者wrap_content，子view的specMode都为AT_MOST
+    3.2)resultSize的大小被设置为父view的大小
+
+4)当父view的specMode为UNSPECIFIED的时候：
+    4.1) 此时不论子view的为match_parent或者wrap_content，子view的specMode都为UNSPECIFIED
+    4.3)此时reusltSize = 0
+
+5)从对UNSPECIFIED分析可以知道,在1)情况之外的情况下，要是想让子view自己决定自己的宽度或者高度的大小，MeasureSpec.makeMeasureSpec(0,UNSPECIFIED)这么调用来获取宽度和高度
+的spec
+
+6)根据方法的参数以及方法的实现可以知道，视图的大小是由父视图和子视图共同决定的，前提是子视图没有设置具体的dimen值
+
+##24.布局优化
+避免Overdraw 过度绘制
