@@ -185,19 +185,14 @@ greenDAO是一个可以帮助Android开发者快速将Java对象映射到SQLite�
 
 ##19.进程间通讯方法
 跨进程访问activity，需要action(android.intent.action.CALL)和uri，例如拨打电话的activity
-
 Content Provider
-
 Broadcast
-
 AIDL 
 
 
 ##20.sleep wait的区别
 sleep（100L）意思为：占用CPU，线程休眠100毫秒
-
 wait（100L）意思为：不占用CPU，线程等待100毫秒 
-
 
 ##21.线程安全
 如果你的代码所在的进程中有多个线程在同时运行，而这些线程可能会同时运行这段代码。如果每次运行结果和单线程运行的结果是一样的，而且其他的变量的值也和预期的是一样的，就是线程安全的。
@@ -209,4 +204,5 @@ LruCache中Lru算法的实现就是通过LinkedHashMap来实现的。LinkedHashM
 EXACTLY：一般是设置了明确的值或者是MATCH_PARENT
 AT_MOST：表示子布局限制在一个最大值内，一般为WARP_CONTENT
 UNSPECIFIED：表示子布局想要多大就多大，很少使用
+
 
