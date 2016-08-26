@@ -235,4 +235,16 @@ UNSPECIFIED：表示子布局想要多大就多大，很少使用
 
 ##24.布局优化
 避免Overdraw 过度绘制
-1.合理选择控件容器
+
+1.合理选择控件容器  
+	LinearLayout易用，效率高，表达能力有限。RelativeLayout复杂，表达能力强，效率稍逊。
+
+2.按需去掉window的默认背景 
+	
+3.去掉其他不必要的背景
+
+4.ClipRect & QuickReject
+	通过canvas.clipRect()来帮助系统识别那些可见的区域，在clipRect区域之外的绘制指令都不会被执行
+
+5.ViewStub
+	
