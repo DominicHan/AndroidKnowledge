@@ -106,7 +106,83 @@ Handler 异步实现时,涉及到 Handler, Looper, Message,Thread四个对象，
 
 	
 ##11.设计模式
-单例：http://blog.csdn.net/yehui928186846/article/details/51317744
+单例：
+饿汉式
+	public class Singleton {
+		private Singleton() {}
+		private static Singleton mInstance = new Singleton();
+		public static Singleton getInstance() {
+			return mInstance;
+		}
+	}
+
+懒汉式
+
+加上synchronized
+	public static synchronized Singleton getInstance(){}
+
+会降低整个访问的速度，而且每次都要判断。可以用双重检查加锁。
+
+双重加锁机制，指的是：并不是每次进入getInstance方法都需要同步，而是先不同步，进入方法过后，先检查实例是否存在，如果不存在才进入下面的同步块，这是第一重检查。进入同步块后，再次检查实例是否存在，如果不存在，就在同步的情况下创建一个实例。这是第二重检查。
+					
+双重加锁机制的实现会使用一个关键字volatile，它的意思是：被volatile修饰的变量的值，将不会被本地线程缓存，所有对该变量的读写都是直接操作共享内存，从而确保多个线程能正确的处理该变量。
+
+	public class Singleton {
+		private Singleton() {}
+		/*
+		*	对保存实例的变量添加volitile的修饰
+		*/
+		private volatile static Singleton mInstance = null;
+		public static Singleton getInstance() {
+			//先检查实例是否存在，如果不存在才进入下面的同步块
+			if (mInstance == null) {                    // Single Checked
+				//同步块，线程安全的创建实例
+				synchronized(Singleton.class) {
+					//再次检查实例是否存在，如果不存在才真正的创建实例
+					if (mInstance == null) {            // Double checked
+						mInstance = new Singleton();
+					}
+				}
+			}
+			return mInstance;
+		}
+	}
+
+	/*
+	 *	静态持有者模式
+	 */
+	public class Singleton {
+		 /**
+	     * 类级的内部类，也就是静态类的成员式内部类，该内部类的实例与外部类的实例
+	     * 没有绑定关系，而且只有被调用时才会装载，从而实现了延迟加载
+		 */
+		private Singleton() {}
+		private static class SingletonHolder() {
+			 /**
+	         * 静态初始化器，由JVM来保证线程安全
+	         */
+			private static Singleton mInstance = new Singleton();
+		}
+		public static Singleton getInstance() {
+			return SingletonHolder.mInstance;
+		}
+	}
+
+	/**
+	 * 使用枚举来实现单例模式的示例
+	 */
+	public class Singleton {
+	    /**
+	     * 定义一个枚举的元素，它就代表了Singleton的一个实例
+	     */
+	    uniqueInstance;
+	    /**
+	     * 示意方法，单例可以有自己的操作
+	     */
+	    public void singletonOperation(){
+	        //功能树立
+	    }
+	}
 
 工厂：http://blog.csdn.net/yehui928186846/article/details/51318071
 
@@ -317,3 +393,4 @@ get请求的数据会附在URL之后，POST把提交的数据则放置在是HTTP
 
 
 ##31.
+
