@@ -508,5 +508,10 @@ UNSPECIFIED：表示子布局想要多大就多大，很少使用
 get请求的数据会附在URL之后，POST把提交的数据则放置在是HTTP包的包体中
 
 
-##31.
+##31.native与h5交互
+采用UrlRouter方案
+我们通过自己实现的框架去拦截前端同学写的url，发现如果是符合我们UrlRouter的协议的话，就跳转到相应的页面。
+至于怎么拦截呢？当然是通过WebViewClient类的shouldOverrideUrlLoading方法咯。
+
+
 
