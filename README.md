@@ -349,7 +349,7 @@ git remote add origin git@server-name:path/repo-name.git  要关联一个远程�
 android类加载过程是 PathClassLoader 其核心方法是findClass方法 
 
 ##14.事件分发机制
-其实事件分发机制，可以分为两个过程，一个是向下分发过程，一个是向上返回过程，其中向下分发是靠dispatchTouchEvent 方法，从Activity的dispatchTouchEvent 直到目标视图的dispatchTouchEvent ，然后进入目标视图的onTouchEvent，向上返回则是靠onTouchEvent，从目标视图的onTouchEvent直到Activity的onTouchEvent。
+其实事件分发机制，可以分为两个过程，一个是向下分发过程，一个是向上返回过程，其中向下分发是靠dispatchTouchEvent 方法，从Activity的dispatchTouchEvent 直到目标视图的dispatchTouchEvent ，然后进入目标view的onTouchEvent，向上返回则是靠onTouchEvent，从目标视图的onTouchEvent直到Activity的onTouchEvent。
 而在向下分发的过程可能会提前结束，这受onInterceptTouchEvent影响，也可能是ViewGroup没有子视图了，在两个因素都可以使该过程提前结束，从而提前进入向上返回的过程。向上返回过程也可能提前结束，如果事件在onTouchEvent中返回true，即事件被消费，那么事件不会继续向上传递，该过程提前结束。
 
 ##15.https
